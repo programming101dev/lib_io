@@ -1,0 +1,3 @@
+# Native status probes are part of the implementation of the surrounding I/O
+# wrapper and must not become separately traced or fault-injected operations.
+src/posix/stdio.c:*:ferror
