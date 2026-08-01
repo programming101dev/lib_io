@@ -1,5 +1,6 @@
 function	test_kind	test_source
 p101_aio_cancel	fault	test/test_fault_wrappers.c
+p101_aio_error	fault	test/test_fault_wrappers.c
 p101_aio_fsync	fault	test/test_fault_wrappers.c
 p101_aio_read	fault	test/test_fault_wrappers.c
 p101_aio_return	fault	test/test_fault_wrappers.c
@@ -36,11 +37,10 @@ p101_read	fault	test/test_fault_wrappers.c
 p101_readv	fault	test/test_fault_wrappers.c
 p101_select	fault	test/test_fault_wrappers.c
 p101_setbuffer	fault	test/test_fault_wrappers.c
+p101_vdprintf	fault	test/test_fault_wrappers.c
 p101_write	fault	test/test_fault_wrappers.c
 p101_writev	fault	test/test_fault_wrappers.c
-p101_aio_error	behavior	test/test_behavior.c
 p101_flockfile	behavior	test/test_behavior.c
 p101_ftrylockfile	behavior	test/test_behavior.c
 p101_funlockfile	behavior	test/test_behavior.c
 p101_setlinebuf	behavior	test/test_behavior.c
-p101_vdprintf	behavior	test/test_behavior.c

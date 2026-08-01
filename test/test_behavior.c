@@ -76,7 +76,7 @@ int main(void)
     }
 
     /* P101_TEST_CASE(p101_aio_error) */
-    aio_status = p101_aio_error(env, &control);
+    aio_status = p101_aio_error(env, err, &control);
     (void)aio_status;
     test_file_locking(env);
 
