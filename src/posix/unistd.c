@@ -150,6 +150,7 @@ ssize_t p101_pread(const struct p101_env *env, struct p101_error *err, int filde
 {
     ssize_t                      ret_val;
     struct p101_env_fault_action fault;
+    int                          hide_success;
 
     P101_TRACE(env);
     if(p101_env_check_fault_action(env, "pread", &fault))
@@ -160,14 +161,28 @@ ssize_t p101_pread(const struct p101_env *env, struct p101_error *err, int filde
             P101_TRACE_EXIT(env);
             return -1;
         }
-        nbyte = p101_wrapper_short_count(nbyte, fault.amount);
+        if(fault.kind == P101_ENV_FAULT_SHORT)
+        {
+            nbyte = p101_wrapper_short_count(nbyte, fault.amount);
+        }
     }
-    errno   = 0;
-    ret_val = pread(fildes, buf, nbyte, offset);
+    hide_success = fault.kind == P101_ENV_FAULT_UNCERTAIN;
+    errno        = 0;
+    ret_val      = pread(fildes, buf, nbyte, offset);
 
     if(ret_val == -1)
     {
         P101_ERROR_RAISE_ERRNO(err, errno);
+    }
+    else if(fault.kind == P101_ENV_FAULT_SHORT && ret_val > 0)
+    {
+        p101_env_record_fault_action(env, "pread", &fault);
+    }
+    else if(hide_success)
+    {
+        p101_env_record_fault_action(env, "pread", &fault);
+        P101_ERROR_RAISE_ERRNO(err, fault.errnum);
+        ret_val = -1;
     }
 
     P101_TRACE_EXIT(env);
@@ -178,6 +193,7 @@ ssize_t p101_pwrite(const struct p101_env *env, struct p101_error *err, int fild
 {
     ssize_t                      ret_val;
     struct p101_env_fault_action fault;
+    int                          hide_success;
 
     P101_TRACE(env);
     if(p101_env_check_fault_action(env, "pwrite", &fault))
@@ -188,14 +204,28 @@ ssize_t p101_pwrite(const struct p101_env *env, struct p101_error *err, int fild
             P101_TRACE_EXIT(env);
             return -1;
         }
-        nbyte = p101_wrapper_short_count(nbyte, fault.amount);
+        if(fault.kind == P101_ENV_FAULT_SHORT)
+        {
+            nbyte = p101_wrapper_short_count(nbyte, fault.amount);
+        }
     }
-    errno   = 0;
-    ret_val = pwrite(fildes, buf, nbyte, offset);
+    hide_success = fault.kind == P101_ENV_FAULT_UNCERTAIN;
+    errno        = 0;
+    ret_val      = pwrite(fildes, buf, nbyte, offset);
 
     if(ret_val == -1)
     {
         P101_ERROR_RAISE_ERRNO(err, errno);
+    }
+    else if(fault.kind == P101_ENV_FAULT_SHORT && ret_val > 0)
+    {
+        p101_env_record_fault_action(env, "pwrite", &fault);
+    }
+    else if(hide_success)
+    {
+        p101_env_record_fault_action(env, "pwrite", &fault);
+        P101_ERROR_RAISE_ERRNO(err, fault.errnum);
+        ret_val = -1;
     }
 
     P101_TRACE_EXIT(env);
@@ -206,6 +236,7 @@ ssize_t p101_read(const struct p101_env *env, struct p101_error *err, int fildes
 {
     ssize_t                      ret_val;
     struct p101_env_fault_action fault;
+    int                          hide_success;
 
     P101_TRACE(env);
     if(p101_env_check_fault_action(env, "read", &fault))
@@ -216,8 +247,12 @@ ssize_t p101_read(const struct p101_env *env, struct p101_error *err, int fildes
             P101_TRACE_EXIT(env);
             return -1;
         }
-        nbyte = p101_wrapper_short_count(nbyte, fault.amount);
+        if(fault.kind == P101_ENV_FAULT_SHORT)
+        {
+            nbyte = p101_wrapper_short_count(nbyte, fault.amount);
+        }
     }
+    hide_success = fault.kind == P101_ENV_FAULT_UNCERTAIN;
 
     errno   = 0;
     ret_val = read(fildes, buf, nbyte);
@@ -225,6 +260,16 @@ ssize_t p101_read(const struct p101_env *env, struct p101_error *err, int fildes
     if(ret_val == -1)
     {
         P101_ERROR_RAISE_ERRNO(err, errno);
+    }
+    else if(fault.kind == P101_ENV_FAULT_SHORT && ret_val > 0)
+    {
+        p101_env_record_fault_action(env, "read", &fault);
+    }
+    else if(hide_success)
+    {
+        p101_env_record_fault_action(env, "read", &fault);
+        P101_ERROR_RAISE_ERRNO(err, fault.errnum);
+        ret_val = -1;
     }
 
     P101_TRACE_EXIT(env);
@@ -236,6 +281,7 @@ ssize_t p101_write(const struct p101_env *env, struct p101_error *err, int filde
 {
     ssize_t                      ret_val;
     struct p101_env_fault_action fault;
+    int                          hide_success;
 
     P101_TRACE(env);
     if(p101_env_check_fault_action(env, "write", &fault))
@@ -246,8 +292,12 @@ ssize_t p101_write(const struct p101_env *env, struct p101_error *err, int filde
             P101_TRACE_EXIT(env);
             return -1;
         }
-        nbyte = p101_wrapper_short_count(nbyte, fault.amount);
+        if(fault.kind == P101_ENV_FAULT_SHORT)
+        {
+            nbyte = p101_wrapper_short_count(nbyte, fault.amount);
+        }
     }
+    hide_success = fault.kind == P101_ENV_FAULT_UNCERTAIN;
 
     errno   = 0;
     ret_val = write(fildes, buf, nbyte);
@@ -255,6 +305,16 @@ ssize_t p101_write(const struct p101_env *env, struct p101_error *err, int filde
     if(ret_val == -1)
     {
         P101_ERROR_RAISE_ERRNO(err, errno);
+    }
+    else if(fault.kind == P101_ENV_FAULT_SHORT && ret_val > 0)
+    {
+        p101_env_record_fault_action(env, "write", &fault);
+    }
+    else if(hide_success)
+    {
+        p101_env_record_fault_action(env, "write", &fault);
+        P101_ERROR_RAISE_ERRNO(err, fault.errnum);
+        ret_val = -1;
     }
 
     P101_TRACE_EXIT(env);
