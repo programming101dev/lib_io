@@ -1,4 +1,5 @@
 #include <aio.h>
+#include <errno.h>
 #include <fcntl.h>
 #include <p101_env/env.h>
 #include <p101_error/error.h>
@@ -77,7 +78,15 @@ int main(void)
 
     /* P101_TEST_CASE(p101_aio_error) */
     aio_status = p101_aio_error(env, err, &control);
-    (void)aio_status;
+    if(aio_status == EINVAL || aio_status == ENOSYS)
+    {
+        EXPECT(p101_error_is_errno(err, aio_status));
+        p101_error_reset(err);
+    }
+    else
+    {
+        EXPECT(p101_error_has_no_error(err));
+    }
     test_file_locking(env);
 
     fd = open("/dev/null", O_WRONLY);
