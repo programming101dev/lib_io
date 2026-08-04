@@ -76,8 +76,7 @@ static void test_uncertain_write_hides_completed_operation(void)
     static const char  payload[] = "done";
     struct p101_error *err;
     struct p101_env   *env;
-    char               received[sizeof(payload)] = {0};
-    int                descriptors[2]            = {-1, -1};
+    int                descriptors[2] = {-1, -1};
 
     err = p101_error_create(false);
     EXPECT(err != NULL);
@@ -90,6 +89,8 @@ static void test_uncertain_write_hides_completed_operation(void)
     EXPECT(pipe(descriptors) == 0);
     if(env != NULL && descriptors[0] >= 0)
     {
+        char received[sizeof(payload)] = {0};
+
         EXPECT(p101_write(env, err, descriptors[1], payload, sizeof(payload)) == -1);
         EXPECT(p101_error_is_errno(err, ETIMEDOUT));
         EXPECT(read(descriptors[0], received, sizeof(received)) == (ssize_t)sizeof(received));
