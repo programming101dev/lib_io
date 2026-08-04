@@ -60,14 +60,15 @@ int p101_setbuffer(const struct p101_env *env, struct p101_error *err, FILE *str
     {
         P101_ERROR_RAISE_ERRNO(err, ERANGE);
         ret_val = -1;
-        goto done;
     }
-    setbuffer(stream, buf, (int)size);
+    else
+    {
+        setbuffer(stream, buf, (int)size);
+    }
 #else
     setbuffer(stream, buf, size);
 #endif
 
-done:
     P101_WRAPPER_DONE(env);
     return ret_val;
 }
