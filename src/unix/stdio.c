@@ -27,7 +27,7 @@ int p101_fpurge(const struct p101_env *env, struct p101_error *err, FILE *stream
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
 
 #ifdef __linux__
     // glibc has no fpurge(); it spells it __fpurge() in <stdio_ext.h>, which
@@ -44,27 +44,32 @@ int p101_fpurge(const struct p101_env *env, struct p101_error *err, FILE *stream
     }
 #endif
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
 int p101_setbuffer(const struct p101_env *env, struct p101_error *err, FILE *stream, char *buf, size_t size)
 {
+    int ret_val;
+
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
+    ret_val = 0;
 #if defined(__APPLE__) || defined(__FreeBSD__)
     if(size > (size_t)INT_MAX)
     {
         P101_ERROR_RAISE_ERRNO(err, ERANGE);
-        P101_TRACE_EXIT(env);
-        return -1;
+        ret_val = -1;
+        goto done;
     }
     setbuffer(stream, buf, (int)size);
 #else
     setbuffer(stream, buf, size);
 #endif
-    P101_TRACE_EXIT(env);
-    return 0;
+
+done:
+    P101_WRAPPER_DONE(env);
+    return ret_val;
 }
 
 void p101_setlinebuf(const struct p101_env *env, FILE *stream)

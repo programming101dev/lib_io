@@ -19,6 +19,7 @@
 
 int p101_close(const struct p101_env *env, struct p101_error *err, int fildes)
 {
+    int     p101_single_result_;
     errno_t actual_error;
     int     ret_val;
     int     fault;
@@ -31,7 +32,8 @@ int p101_close(const struct p101_env *env, struct p101_error *err, int fildes)
         P101_ERROR_RAISE_ERRNO(err, fault);
         P101_TRACE_EXIT(env);
 
-        return -1;
+        p101_single_result_ = -1;
+        goto p101_single_exit_;
     }
 
     errno        = 0;
@@ -53,11 +55,16 @@ int p101_close(const struct p101_env *env, struct p101_error *err, int fildes)
 
     P101_TRACE_EXIT(env);
 
-    return ret_val;
+    p101_single_result_ = ret_val;
+    goto p101_single_exit_;
+
+p101_single_exit_:
+    return p101_single_result_;
 }
 
 int p101_dup(const struct p101_env *env, struct p101_error *err, int fildes)
 {
+    int p101_single_result_;
     int ret_val;
     int fault;
 
@@ -69,7 +76,8 @@ int p101_dup(const struct p101_env *env, struct p101_error *err, int fildes)
         P101_ERROR_RAISE_ERRNO(err, fault);
         P101_TRACE_EXIT(env);
 
-        return -1;
+        p101_single_result_ = -1;
+        goto p101_single_exit_;
     }
 
     errno   = 0;
@@ -86,11 +94,16 @@ int p101_dup(const struct p101_env *env, struct p101_error *err, int fildes)
 
     P101_TRACE_EXIT(env);
 
-    return ret_val;
+    p101_single_result_ = ret_val;
+    goto p101_single_exit_;
+
+p101_single_exit_:
+    return p101_single_result_;
 }
 
 int p101_dup2(const struct p101_env *env, struct p101_error *err, int fildes, int fildes2)
 {
+    int p101_single_result_;
     int ret_val;
     int fault;
 
@@ -102,7 +115,8 @@ int p101_dup2(const struct p101_env *env, struct p101_error *err, int fildes, in
         P101_ERROR_RAISE_ERRNO(err, fault);
         P101_TRACE_EXIT(env);
 
-        return -1;
+        p101_single_result_ = -1;
+        goto p101_single_exit_;
     }
 
     errno   = 0;
@@ -125,7 +139,11 @@ int p101_dup2(const struct p101_env *env, struct p101_error *err, int fildes, in
 
     P101_TRACE_EXIT(env);
 
-    return ret_val;
+    p101_single_result_ = ret_val;
+    goto p101_single_exit_;
+
+p101_single_exit_:
+    return p101_single_result_;
 }
 
 off_t p101_lseek(const struct p101_env *env, struct p101_error *err, int fildes, off_t offset, int whence)
@@ -133,7 +151,7 @@ off_t p101_lseek(const struct p101_env *env, struct p101_error *err, int fildes,
     off_t ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, (off_t)-1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, (off_t)-1);
     errno   = 0;
     ret_val = lseek(fildes, offset, whence);
 
@@ -142,12 +160,13 @@ off_t p101_lseek(const struct p101_env *env, struct p101_error *err, int fildes,
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
 ssize_t p101_pread(const struct p101_env *env, struct p101_error *err, int fildes, void *buf, size_t nbyte, off_t offset)
 {
+    ssize_t                      p101_single_result_;
     ssize_t                      ret_val;
     struct p101_env_fault_action fault;
     int                          hide_success;
@@ -159,7 +178,8 @@ ssize_t p101_pread(const struct p101_env *env, struct p101_error *err, int filde
         {
             P101_ERROR_RAISE_ERRNO(err, fault.errnum);
             P101_TRACE_EXIT(env);
-            return -1;
+            p101_single_result_ = -1;
+            goto p101_single_exit_;
         }
         if(fault.kind == P101_ENV_FAULT_SHORT)
         {
@@ -186,11 +206,16 @@ ssize_t p101_pread(const struct p101_env *env, struct p101_error *err, int filde
     }
 
     P101_TRACE_EXIT(env);
-    return ret_val;
+    p101_single_result_ = ret_val;
+    goto p101_single_exit_;
+
+p101_single_exit_:
+    return p101_single_result_;
 }
 
 ssize_t p101_pwrite(const struct p101_env *env, struct p101_error *err, int fildes, const void *buf, size_t nbyte, off_t offset)
 {
+    ssize_t                      p101_single_result_;
     ssize_t                      ret_val;
     struct p101_env_fault_action fault;
     int                          hide_success;
@@ -202,7 +227,8 @@ ssize_t p101_pwrite(const struct p101_env *env, struct p101_error *err, int fild
         {
             P101_ERROR_RAISE_ERRNO(err, fault.errnum);
             P101_TRACE_EXIT(env);
-            return -1;
+            p101_single_result_ = -1;
+            goto p101_single_exit_;
         }
         if(fault.kind == P101_ENV_FAULT_SHORT)
         {
@@ -229,11 +255,16 @@ ssize_t p101_pwrite(const struct p101_env *env, struct p101_error *err, int fild
     }
 
     P101_TRACE_EXIT(env);
-    return ret_val;
+    p101_single_result_ = ret_val;
+    goto p101_single_exit_;
+
+p101_single_exit_:
+    return p101_single_result_;
 }
 
 ssize_t p101_read(const struct p101_env *env, struct p101_error *err, int fildes, void *buf, size_t nbyte)
 {
+    ssize_t                      p101_single_result_;
     ssize_t                      ret_val;
     struct p101_env_fault_action fault;
     int                          hide_success;
@@ -245,7 +276,8 @@ ssize_t p101_read(const struct p101_env *env, struct p101_error *err, int fildes
         {
             P101_ERROR_RAISE_ERRNO(err, fault.errnum);
             P101_TRACE_EXIT(env);
-            return -1;
+            p101_single_result_ = -1;
+            goto p101_single_exit_;
         }
         if(fault.kind == P101_ENV_FAULT_SHORT)
         {
@@ -274,11 +306,16 @@ ssize_t p101_read(const struct p101_env *env, struct p101_error *err, int fildes
 
     P101_TRACE_EXIT(env);
 
-    return ret_val;
+    p101_single_result_ = ret_val;
+    goto p101_single_exit_;
+
+p101_single_exit_:
+    return p101_single_result_;
 }
 
 ssize_t p101_write(const struct p101_env *env, struct p101_error *err, int fildes, const void *buf, size_t nbyte)
 {
+    ssize_t                      p101_single_result_;
     ssize_t                      ret_val;
     struct p101_env_fault_action fault;
     int                          hide_success;
@@ -290,7 +327,8 @@ ssize_t p101_write(const struct p101_env *env, struct p101_error *err, int filde
         {
             P101_ERROR_RAISE_ERRNO(err, fault.errnum);
             P101_TRACE_EXIT(env);
-            return -1;
+            p101_single_result_ = -1;
+            goto p101_single_exit_;
         }
         if(fault.kind == P101_ENV_FAULT_SHORT)
         {
@@ -319,5 +357,9 @@ ssize_t p101_write(const struct p101_env *env, struct p101_error *err, int filde
 
     P101_TRACE_EXIT(env);
 
-    return ret_val;
+    p101_single_result_ = ret_val;
+    goto p101_single_exit_;
+
+p101_single_exit_:
+    return p101_single_result_;
 }

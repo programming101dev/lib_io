@@ -59,7 +59,7 @@ FILE *p101_fdopen(const struct p101_env *env, struct p101_error *err, int fildes
     FILE *ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, NULL);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, NULL);
     errno   = 0;
     ret_val = fdopen(fildes, mode);
 
@@ -72,7 +72,7 @@ FILE *p101_fdopen(const struct p101_env *env, struct p101_error *err, int fildes
         P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, "stdio-stream", ret_val, 0U, "fdopen");
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -81,7 +81,7 @@ int p101_fileno(const struct p101_env *env, struct p101_error *err, FILE *stream
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = fileno(stream);
 
@@ -90,7 +90,7 @@ int p101_fileno(const struct p101_env *env, struct p101_error *err, FILE *stream
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -107,7 +107,7 @@ FILE *p101_fmemopen(const struct p101_env *env, struct p101_error *err, void *re
     FILE *ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, NULL);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, NULL);
     errno   = 0;
     ret_val = fmemopen(buf, size, mode);
 
@@ -120,7 +120,7 @@ FILE *p101_fmemopen(const struct p101_env *env, struct p101_error *err, void *re
         P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, "stdio-stream", ret_val, 0U, "fmemopen");
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -129,7 +129,7 @@ int p101_fseeko(const struct p101_env *env, struct p101_error *err, FILE *stream
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = fseeko(stream, offset, whence);
 
@@ -138,7 +138,7 @@ int p101_fseeko(const struct p101_env *env, struct p101_error *err, FILE *stream
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -147,7 +147,7 @@ off_t p101_ftello(const struct p101_env *env, struct p101_error *err, FILE *stre
     off_t ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, (off_t)-1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, (off_t)-1);
     errno   = 0;
     ret_val = ftello(stream);
 
@@ -156,7 +156,7 @@ off_t p101_ftello(const struct p101_env *env, struct p101_error *err, FILE *stre
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -186,7 +186,7 @@ int p101_getc_unlocked(const struct p101_env *env, struct p101_error *err, FILE 
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno = 0;
 #ifdef __GNUC__
     #pragma GCC diagnostic push
@@ -204,7 +204,7 @@ int p101_getc_unlocked(const struct p101_env *env, struct p101_error *err, FILE 
         P101_ERROR_RAISE_ERRNO(err, stdio_error_code(actual_error));
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -214,7 +214,7 @@ int p101_getchar_unlocked(const struct p101_env *env, struct p101_error *err)
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno = 0;
 #ifdef __GNUC__
     #pragma GCC diagnostic push
@@ -232,7 +232,7 @@ int p101_getchar_unlocked(const struct p101_env *env, struct p101_error *err)
         P101_ERROR_RAISE_ERRNO(err, stdio_error_code(actual_error));
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -244,7 +244,7 @@ ssize_t p101_getdelim(const struct p101_env *env, struct p101_error *err, char *
     ssize_t   ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, (ssize_t)-1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, (ssize_t)-1);
     old_buffer   = (uintptr_t)*lineptr;
     old_size     = *n;
     errno        = 0;
@@ -257,7 +257,7 @@ ssize_t p101_getdelim(const struct p101_env *env, struct p101_error *err, char *
         P101_ERROR_RAISE_ERRNO(err, stdio_error_code(actual_error));
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -269,7 +269,7 @@ ssize_t p101_getline(const struct p101_env *env, struct p101_error *err, char **
     ssize_t   ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, (ssize_t)-1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, (ssize_t)-1);
     old_buffer   = (uintptr_t)*lineptr;
     old_size     = *n;
     errno        = 0;
@@ -282,7 +282,7 @@ ssize_t p101_getline(const struct p101_env *env, struct p101_error *err, char **
         P101_ERROR_RAISE_ERRNO(err, stdio_error_code(actual_error));
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -291,7 +291,7 @@ FILE *p101_open_memstream(const struct p101_env *env, struct p101_error *err, ch
     FILE *ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, NULL);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, NULL);
     errno   = 0;
     ret_val = open_memstream(bufp, sizep);
 
@@ -304,7 +304,7 @@ FILE *p101_open_memstream(const struct p101_env *env, struct p101_error *err, ch
         P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, "stdio-stream", ret_val, 0U, "open_memstream");
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -313,7 +313,7 @@ int p101_putc_unlocked(const struct p101_env *env, struct p101_error *err, int c
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = putc_unlocked(c, stream);
 
@@ -322,7 +322,7 @@ int p101_putc_unlocked(const struct p101_env *env, struct p101_error *err, int c
         P101_ERROR_RAISE_ERRNO(err, stdio_error_code(errno));
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -331,7 +331,7 @@ int p101_putchar_unlocked(const struct p101_env *env, struct p101_error *err, in
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = putchar_unlocked(c);
 
@@ -340,7 +340,7 @@ int p101_putchar_unlocked(const struct p101_env *env, struct p101_error *err, in
         P101_ERROR_RAISE_ERRNO(err, stdio_error_code(errno));
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -349,7 +349,7 @@ int p101_vdprintf(const struct p101_env *env, struct p101_error *err, int fildes
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno = 0;
 
 #pragma GCC diagnostic push
@@ -362,6 +362,6 @@ int p101_vdprintf(const struct p101_env *env, struct p101_error *err, int fildes
         P101_ERROR_RAISE_ERRNO(err, stdio_error_code(errno));
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }

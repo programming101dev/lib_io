@@ -108,6 +108,7 @@ static mode_t open_mode_arg(va_list *args)
 
 int p101_creat(const struct p101_env *env, struct p101_error *err, const char *path, mode_t mode)
 {
+    int p101_single_result_;
     int ret_val;
     int fault;
 
@@ -119,7 +120,8 @@ int p101_creat(const struct p101_env *env, struct p101_error *err, const char *p
         P101_ERROR_RAISE_ERRNO(err, fault);
         P101_TRACE_EXIT(env);
 
-        return -1;
+        p101_single_result_ = -1;
+        goto p101_single_exit_;
     }
 
     errno   = 0;
@@ -136,11 +138,16 @@ int p101_creat(const struct p101_env *env, struct p101_error *err, const char *p
 
     P101_TRACE_EXIT(env);
 
-    return ret_val;
+    p101_single_result_ = ret_val;
+    goto p101_single_exit_;
+
+p101_single_exit_:
+    return p101_single_result_;
 }
 
 int p101_fcntl(const struct p101_env *env, struct p101_error *err, int fildes, int cmd, ...)
 {
+    int     p101_single_result_;
     int     ret_val;
     int     fault;
     va_list args;
@@ -153,7 +160,8 @@ int p101_fcntl(const struct p101_env *env, struct p101_error *err, int fildes, i
         P101_ERROR_RAISE_ERRNO(err, fault);
         P101_TRACE_EXIT(env);
 
-        return -1;
+        p101_single_result_ = -1;
+        goto p101_single_exit_;
     }
 
     errno = 0;
@@ -191,11 +199,16 @@ int p101_fcntl(const struct p101_env *env, struct p101_error *err, int fildes, i
 
     P101_TRACE_EXIT(env);
 
-    return ret_val;
+    p101_single_result_ = ret_val;
+    goto p101_single_exit_;
+
+p101_single_exit_:
+    return p101_single_result_;
 }
 
 int p101_open(const struct p101_env *env, struct p101_error *err, const char *path, int oflag, ...)
 {
+    int     p101_single_result_;
     int     ret_val;
     int     fault;
     va_list args;
@@ -208,7 +221,8 @@ int p101_open(const struct p101_env *env, struct p101_error *err, const char *pa
         P101_ERROR_RAISE_ERRNO(err, fault);
         P101_TRACE_EXIT(env);
 
-        return -1;
+        p101_single_result_ = -1;
+        goto p101_single_exit_;
     }
 
     errno = 0;
@@ -239,11 +253,16 @@ int p101_open(const struct p101_env *env, struct p101_error *err, const char *pa
 
     P101_TRACE_EXIT(env);
 
-    return ret_val;
+    p101_single_result_ = ret_val;
+    goto p101_single_exit_;
+
+p101_single_exit_:
+    return p101_single_result_;
 }
 
 int p101_openat(const struct p101_env *env, struct p101_error *err, int fd, const char *path, int oflag, ...)
 {
+    int     p101_single_result_;
     int     ret_val;
     int     fault;
     va_list args;
@@ -256,7 +275,8 @@ int p101_openat(const struct p101_env *env, struct p101_error *err, int fd, cons
         P101_ERROR_RAISE_ERRNO(err, fault);
         P101_TRACE_EXIT(env);
 
-        return -1;
+        p101_single_result_ = -1;
+        goto p101_single_exit_;
     }
 
     errno = 0;
@@ -287,5 +307,9 @@ int p101_openat(const struct p101_env *env, struct p101_error *err, int fd, cons
 
     P101_TRACE_EXIT(env);
 
-    return ret_val;
+    p101_single_result_ = ret_val;
+    goto p101_single_exit_;
+
+p101_single_exit_:
+    return p101_single_result_;
 }

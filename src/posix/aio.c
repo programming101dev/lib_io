@@ -22,7 +22,7 @@ int p101_aio_cancel(const struct p101_env *env, struct p101_error *err, int fild
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = aio_cancel(fildes, aiocbp);
 
@@ -31,7 +31,7 @@ int p101_aio_cancel(const struct p101_env *env, struct p101_error *err, int fild
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -40,7 +40,7 @@ int p101_aio_error(const struct p101_env *env, struct p101_error *err, const str
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN_CODE(env, err);
+    P101_WRAPPER_FAULT_RETURN_CODE(env, err, ret_val);
     errno   = 0;
     ret_val = aio_error(aiocbp);
 
@@ -49,7 +49,7 @@ int p101_aio_error(const struct p101_env *env, struct p101_error *err, const str
         P101_ERROR_RAISE_ERRNO(err, ret_val);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -58,7 +58,7 @@ int p101_aio_fsync(const struct p101_env *env, struct p101_error *err, int op, s
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = aio_fsync(op, aiocbp);
 
@@ -67,7 +67,7 @@ int p101_aio_fsync(const struct p101_env *env, struct p101_error *err, int op, s
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -76,7 +76,7 @@ int p101_aio_read(const struct p101_env *env, struct p101_error *err, struct aio
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = aio_read(aiocbp);
 
@@ -85,7 +85,7 @@ int p101_aio_read(const struct p101_env *env, struct p101_error *err, struct aio
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -94,7 +94,7 @@ ssize_t p101_aio_return(const struct p101_env *env, struct p101_error *err, stru
     ssize_t ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, (ssize_t)-1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, (ssize_t)-1);
     errno   = 0;
     ret_val = aio_return(aiocbp);
 
@@ -103,7 +103,7 @@ ssize_t p101_aio_return(const struct p101_env *env, struct p101_error *err, stru
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -112,7 +112,7 @@ int p101_aio_suspend(const struct p101_env *env, struct p101_error *err, const s
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = aio_suspend(list, nent, timeout);
 
@@ -121,7 +121,7 @@ int p101_aio_suspend(const struct p101_env *env, struct p101_error *err, const s
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -130,7 +130,7 @@ int p101_aio_write(const struct p101_env *env, struct p101_error *err, struct ai
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = aio_write(aiocbp);
 
@@ -139,7 +139,7 @@ int p101_aio_write(const struct p101_env *env, struct p101_error *err, struct ai
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -148,7 +148,7 @@ int p101_lio_listio(const struct p101_env *env, struct p101_error *err, int mode
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno = 0;
 
 #pragma GCC diagnostic push
@@ -165,6 +165,6 @@ int p101_lio_listio(const struct p101_env *env, struct p101_error *err, int mode
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
