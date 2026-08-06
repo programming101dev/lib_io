@@ -39,8 +39,6 @@
  * limitations under the License.
  */
 
-#include <p101_env/wrapper.h>
-
 int p101_aio_cancel(const struct p101_env *env, struct p101_error *err, int fildes, struct aiocb *aiocbp)
 {
     int ret_val;
