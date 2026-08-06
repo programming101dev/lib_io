@@ -1,46 +1,46 @@
-function	test_kind	test_source
-p101_aio_cancel	fault	test/test_fault_wrappers.c
-p101_aio_error	fault	test/test_fault_wrappers.c
-p101_aio_fsync	fault	test/test_fault_wrappers.c
-p101_aio_read	fault	test/test_fault_wrappers.c
-p101_aio_return	fault	test/test_fault_wrappers.c
-p101_aio_suspend	fault	test/test_fault_wrappers.c
-p101_aio_write	fault	test/test_fault_wrappers.c
-p101_close	fault	test/test_fault_wrappers.c
-p101_creat	fault	test/test_fault_wrappers.c
-p101_dup	fault	test/test_fault_wrappers.c
-p101_dup2	fault	test/test_fault_wrappers.c
-p101_fcntl	fault	test/test_fault_wrappers.c
-p101_fdopen	fault	test/test_fault_wrappers.c
-p101_fileno	fault	test/test_fault_wrappers.c
-p101_fmemopen	fault	test/test_fault_wrappers.c
-p101_fpurge	fault	test/test_fault_wrappers.c
-p101_fseeko	fault	test/test_fault_wrappers.c
-p101_ftello	fault	test/test_fault_wrappers.c
-p101_getc_unlocked	fault	test/test_fault_wrappers.c
-p101_getchar_unlocked	fault	test/test_fault_wrappers.c
-p101_getdelim	fault	test/test_fault_wrappers.c
-p101_getline	fault	test/test_fault_wrappers.c
-p101_lio_listio	fault	test/test_fault_wrappers.c
-p101_lockf	fault	test/test_fault_wrappers.c
-p101_lseek	fault	test/test_fault_wrappers.c
-p101_open	fault	test/test_fault_wrappers.c
-p101_open_memstream	fault	test/test_fault_wrappers.c
-p101_openat	fault	test/test_fault_wrappers.c
-p101_poll	fault	test/test_fault_wrappers.c
-p101_pread	fault	test/test_fault_wrappers.c
-p101_pselect	fault	test/test_fault_wrappers.c
-p101_putc_unlocked	fault	test/test_fault_wrappers.c
-p101_putchar_unlocked	fault	test/test_fault_wrappers.c
-p101_pwrite	fault	test/test_fault_wrappers.c
-p101_read	fault	test/test_fault_wrappers.c
-p101_readv	fault	test/test_fault_wrappers.c
-p101_select	fault	test/test_fault_wrappers.c
-p101_setbuffer	fault	test/test_fault_wrappers.c
-p101_vdprintf	fault	test/test_fault_wrappers.c
-p101_write	fault	test/test_fault_wrappers.c
-p101_writev	fault	test/test_fault_wrappers.c
-p101_flockfile	behavior	test/test_behavior.c
-p101_ftrylockfile	behavior	test/test_behavior.c
-p101_funlockfile	behavior	test/test_behavior.c
-p101_setlinebuf	behavior	test/test_behavior.c
+function	function_usr	test_kind	test_source
+p101_aio_cancel	c:@F@p101_aio_cancel	fault	test/test_fault_wrappers.c
+p101_aio_error	c:@F@p101_aio_error	fault	test/test_fault_wrappers.c
+p101_aio_fsync	c:@F@p101_aio_fsync	fault	test/test_fault_wrappers.c
+p101_aio_read	c:@F@p101_aio_read	fault	test/test_fault_wrappers.c
+p101_aio_return	c:@F@p101_aio_return	fault	test/test_fault_wrappers.c
+p101_aio_suspend	c:@F@p101_aio_suspend	fault	test/test_fault_wrappers.c
+p101_aio_write	c:@F@p101_aio_write	fault	test/test_fault_wrappers.c
+p101_close	c:@F@p101_close	fault	test/test_fault_wrappers.c
+p101_creat	c:@F@p101_creat	fault	test/test_fault_wrappers.c
+p101_dup	c:@F@p101_dup	fault	test/test_fault_wrappers.c
+p101_dup2	c:@F@p101_dup2	fault	test/test_fault_wrappers.c
+p101_fcntl	c:@F@p101_fcntl	fault	test/test_fault_wrappers.c
+p101_fdopen	c:@F@p101_fdopen	fault	test/test_fault_wrappers.c
+p101_fileno	c:@F@p101_fileno	fault	test/test_fault_wrappers.c
+p101_fmemopen	c:@F@p101_fmemopen	fault	test/test_fault_wrappers.c
+p101_fpurge	c:@F@p101_fpurge	fault	test/test_fault_wrappers.c
+p101_fseeko	c:@F@p101_fseeko	fault	test/test_fault_wrappers.c
+p101_ftello	c:@F@p101_ftello	fault	test/test_fault_wrappers.c
+p101_getc_unlocked	c:@F@p101_getc_unlocked	fault	test/test_fault_wrappers.c
+p101_getchar_unlocked	c:@F@p101_getchar_unlocked	fault	test/test_fault_wrappers.c
+p101_getdelim	c:@F@p101_getdelim	fault	test/test_fault_wrappers.c
+p101_getline	c:@F@p101_getline	fault	test/test_fault_wrappers.c
+p101_lio_listio	c:@F@p101_lio_listio	fault	test/test_fault_wrappers.c
+p101_lockf	c:@F@p101_lockf	fault	test/test_fault_wrappers.c
+p101_lseek	c:@F@p101_lseek	fault	test/test_fault_wrappers.c
+p101_open	c:@F@p101_open	fault	test/test_fault_wrappers.c
+p101_open_memstream	c:@F@p101_open_memstream	fault	test/test_fault_wrappers.c
+p101_openat	c:@F@p101_openat	fault	test/test_fault_wrappers.c
+p101_poll	c:@F@p101_poll	fault	test/test_fault_wrappers.c
+p101_pread	c:@F@p101_pread	fault	test/test_fault_wrappers.c
+p101_pselect	c:@F@p101_pselect	fault	test/test_fault_wrappers.c
+p101_putc_unlocked	c:@F@p101_putc_unlocked	fault	test/test_fault_wrappers.c
+p101_putchar_unlocked	c:@F@p101_putchar_unlocked	fault	test/test_fault_wrappers.c
+p101_pwrite	c:@F@p101_pwrite	fault	test/test_fault_wrappers.c
+p101_read	c:@F@p101_read	fault	test/test_fault_wrappers.c
+p101_readv	c:@F@p101_readv	fault	test/test_fault_wrappers.c
+p101_select	c:@F@p101_select	fault	test/test_fault_wrappers.c
+p101_setbuffer	c:@F@p101_setbuffer	fault	test/test_fault_wrappers.c
+p101_vdprintf	c:@F@p101_vdprintf	fault	test/test_fault_wrappers.c
+p101_write	c:@F@p101_write	fault	test/test_fault_wrappers.c
+p101_writev	c:@F@p101_writev	fault	test/test_fault_wrappers.c
+p101_flockfile	c:@F@p101_flockfile	behavior	test/test_behavior.c
+p101_ftrylockfile	c:@F@p101_ftrylockfile	behavior	test/test_behavior.c
+p101_funlockfile	c:@F@p101_funlockfile	behavior	test/test_behavior.c
+p101_setlinebuf	c:@F@p101_setlinebuf	behavior	test/test_behavior.c

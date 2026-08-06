@@ -19,15 +19,7 @@ set(BSD_STANDARD_FLAGS -D_BSD_SOURCE -D__BSD_VISIBLE)
 
 set(LIBRARY_TARGETS p101_io)
 set(p101_io_SOURCES
-        src/posix/aio.c
-        src/posix/fcntl.c
-        src/posix/poll.c
-        src/posix/stdio.c
-        src/posix/sys/select.c
-        src/posix/unistd.c
-        src/posix_xsi/sys/uio.c
-        src/posix_xsi/unistd.c
-        src/unix/stdio.c
+        src/io.c
 )
 set(p101_io_HEADERS
         include/p101_io/io.h

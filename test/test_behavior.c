@@ -71,6 +71,8 @@ static struct p101_env *create_uncertain_env(struct p101_error *err, const char 
     return env;
 }
 
+P101_ATTR_SEMANTIC_ROLE("p101:fault-semantics:uncertain-native-effect")
+
 static void test_uncertain_write_hides_completed_operation(void)
 {
     static const char  payload[] = "done";
@@ -84,7 +86,7 @@ static void test_uncertain_write_hides_completed_operation(void)
     {
         return;
     }
-    env = create_uncertain_env(err, "write");
+    env = create_uncertain_env(err, "p101_write");
     EXPECT(env != NULL);
     EXPECT(pipe(descriptors) == 0);
     if(env != NULL && descriptors[0] >= 0)
