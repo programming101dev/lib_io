@@ -15,6 +15,7 @@
  */
 
 #include "p101_io/p101_stdio.h"
+#include <p101_env/resource_classes.h>
 #include <p101_env/wrapper.h>
 
 /*
@@ -89,7 +90,7 @@ FILE *p101_fdopen(const struct p101_env *env, struct p101_error *err, int fildes
     }
     else
     {
-        P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, "stdio-stream", ret_val, 0U, "fdopen");
+        P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, P101_RESOURCE_CLASS_STDIO_STREAM, ret_val, 0U, "fdopen");
     }
 
     P101_WRAPPER_DONE(env);
@@ -137,7 +138,7 @@ FILE *p101_fmemopen(const struct p101_env *env, struct p101_error *err, void *re
     }
     else
     {
-        P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, "stdio-stream", ret_val, 0U, "fmemopen");
+        P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, P101_RESOURCE_CLASS_STDIO_STREAM, ret_val, 0U, "fmemopen");
     }
 
     P101_WRAPPER_DONE(env);
@@ -329,7 +330,7 @@ FILE *p101_open_memstream(const struct p101_env *env, struct p101_error *err, ch
     }
     else
     {
-        P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, "stdio-stream", ret_val, 0U, "open_memstream");
+        P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, P101_RESOURCE_CLASS_STDIO_STREAM, ret_val, 0U, "open_memstream");
     }
 
     P101_WRAPPER_DONE(env);
