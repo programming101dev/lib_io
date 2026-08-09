@@ -2035,7 +2035,7 @@ static void test_p101_vdprintf(struct p101_env *env, struct p101_error *err, ...
         fault_resource_events = 0U;
         errno                 = P101_TEST_ERRNO_SENTINEL;
         p101_env_set_fault_injector(env, fail_next_call, &state);
-        int result = p101_vdprintf(env, err, 0, NULL, arguments);
+        int result = p101_vdprintf(env, err, 0, "x", arguments);
         (void)result;
         EXPECT(state.checks == 1);
         EXPECT(p101_error_is_errno(err, state.code));
