@@ -637,10 +637,10 @@ static void test_p101_aio_read(struct p101_env *env, struct p101_error *err)
                 native_child_status = 77;
                 goto native_child_done_;
             }
-            struct aiocb native_argument_2 = {0};
+            struct aiocb native_argument_2 = {.aio_fildes = -1};
             int          native_result     = p101_aio_read(native_env, native_err, &native_argument_2);
             (void)native_result;
-            if(!p101_error_is_errno(native_err, EINVAL))
+            if(!p101_error_is_errno(native_err, EBADF))
             {
                 fprintf(stderr, "native smoke did not produce the declared failure: p101_aio_read: %s\n", p101_error_get_message(native_err));
                 native_passed = false;
@@ -867,7 +867,7 @@ static void test_p101_aio_suspend(struct p101_env *env, struct p101_error *err)
             }
             const struct aiocb *const native_argument_2 = NULL;
             struct timespec           native_argument_4 = {0};
-            int                       native_result     = p101_aio_suspend(native_env, native_err, &native_argument_2, 0, &native_argument_4);
+            int                       native_result     = p101_aio_suspend(native_env, native_err, &native_argument_2, -1, &native_argument_4);
             (void)native_result;
             if(!p101_error_is_errno(native_err, EINVAL))
             {
@@ -980,10 +980,10 @@ static void test_p101_aio_write(struct p101_env *env, struct p101_error *err)
                 native_child_status = 77;
                 goto native_child_done_;
             }
-            struct aiocb native_argument_2 = {0};
+            struct aiocb native_argument_2 = {.aio_fildes = -1};
             int          native_result     = p101_aio_write(native_env, native_err, &native_argument_2);
             (void)native_result;
-            if(!p101_error_is_errno(native_err, EINVAL))
+            if(!p101_error_is_errno(native_err, EBADF))
             {
                 fprintf(stderr, "native smoke did not produce the declared failure: p101_aio_write: %s\n", p101_error_get_message(native_err));
                 native_passed = false;
@@ -1096,7 +1096,7 @@ static void test_p101_lio_listio(struct p101_env *env, struct p101_error *err)
             }
             struct aiocb *const native_argument_3 = NULL;
             struct sigevent     native_argument_5 = {0};
-            int                 native_result     = p101_lio_listio(native_env, native_err, 0, &native_argument_3, 0, &native_argument_5);
+            int                 native_result     = p101_lio_listio(native_env, native_err, -1, &native_argument_3, 0, &native_argument_5);
             (void)native_result;
             if(!p101_error_is_errno(native_err, EINVAL))
             {

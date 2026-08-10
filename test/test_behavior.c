@@ -113,6 +113,61 @@ static void test_uncertain_write_hides_completed_operation(void)
     p101_error_destroy(err);
 }
 
+static void test_invalid_aio_inputs(const struct p101_env *env, struct p101_error *err)
+{
+    int     int_result;
+    ssize_t size_result;
+
+    errno      = 0;
+    int_result = p101_aio_error(env, err, NULL);
+    EXPECT(int_result == EINVAL);
+    EXPECT(errno == EINVAL);
+    EXPECT(p101_error_is_errno(err, EINVAL));
+    p101_error_reset(err);
+
+    errno      = 0;
+    int_result = p101_aio_fsync(env, err, O_SYNC, NULL);
+    EXPECT(int_result == -1);
+    EXPECT(errno == EINVAL);
+    EXPECT(p101_error_is_errno(err, EINVAL));
+    p101_error_reset(err);
+
+    errno      = 0;
+    int_result = p101_aio_read(env, err, NULL);
+    EXPECT(int_result == -1);
+    EXPECT(errno == EINVAL);
+    EXPECT(p101_error_is_errno(err, EINVAL));
+    p101_error_reset(err);
+
+    errno       = 0;
+    size_result = p101_aio_return(env, err, NULL);
+    EXPECT(size_result == (ssize_t)-1);
+    EXPECT(errno == EINVAL);
+    EXPECT(p101_error_is_errno(err, EINVAL));
+    p101_error_reset(err);
+
+    errno      = 0;
+    int_result = p101_aio_suspend(env, err, NULL, 1, NULL);
+    EXPECT(int_result == -1);
+    EXPECT(errno == EINVAL);
+    EXPECT(p101_error_is_errno(err, EINVAL));
+    p101_error_reset(err);
+
+    errno      = 0;
+    int_result = p101_aio_write(env, err, NULL);
+    EXPECT(int_result == -1);
+    EXPECT(errno == EINVAL);
+    EXPECT(p101_error_is_errno(err, EINVAL));
+    p101_error_reset(err);
+
+    errno      = 0;
+    int_result = p101_lio_listio(env, err, LIO_WAIT, NULL, 1, NULL);
+    EXPECT(int_result == -1);
+    EXPECT(errno == EINVAL);
+    EXPECT(p101_error_is_errno(err, EINVAL));
+    p101_error_reset(err);
+}
+
 int main(void)
 {
     struct p101_error *err;
@@ -144,6 +199,7 @@ int main(void)
     {
         EXPECT(p101_error_has_no_error(err));
     }
+    test_invalid_aio_inputs(env, err);
     test_file_locking(env);
     test_uncertain_write_hides_completed_operation();
 
