@@ -93,12 +93,21 @@ int p101_aio_read(const struct p101_env *env, struct p101_error *err, struct aio
 
     P101_TRACE(env);
     P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
-    errno   = 0;
-    ret_val = aio_read(aiocbp);
-
-    if(ret_val == -1)
+    if(aiocbp != NULL && aiocbp->aio_fildes < 0)
     {
-        P101_ERROR_RAISE_ERRNO(err, errno);
+        errno   = EBADF;
+        ret_val = -1;
+        P101_ERROR_RAISE_ERRNO(err, EBADF);
+    }
+    else
+    {
+        errno   = 0;
+        ret_val = aio_read(aiocbp);
+
+        if(ret_val == -1)
+        {
+            P101_ERROR_RAISE_ERRNO(err, errno);
+        }
     }
 
     P101_WRAPPER_DONE(env);
@@ -129,12 +138,21 @@ int p101_aio_suspend(const struct p101_env *env, struct p101_error *err, const s
 
     P101_TRACE(env);
     P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
-    errno   = 0;
-    ret_val = aio_suspend(list, nent, timeout);
-
-    if(ret_val == -1)
+    if(nent < 0)
     {
-        P101_ERROR_RAISE_ERRNO(err, errno);
+        errno   = EINVAL;
+        ret_val = -1;
+        P101_ERROR_RAISE_ERRNO(err, EINVAL);
+    }
+    else
+    {
+        errno   = 0;
+        ret_val = aio_suspend(list, nent, timeout);
+
+        if(ret_val == -1)
+        {
+            P101_ERROR_RAISE_ERRNO(err, errno);
+        }
     }
 
     P101_WRAPPER_DONE(env);
@@ -147,12 +165,21 @@ int p101_aio_write(const struct p101_env *env, struct p101_error *err, struct ai
 
     P101_TRACE(env);
     P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
-    errno   = 0;
-    ret_val = aio_write(aiocbp);
-
-    if(ret_val == -1)
+    if(aiocbp != NULL && aiocbp->aio_fildes < 0)
     {
-        P101_ERROR_RAISE_ERRNO(err, errno);
+        errno   = EBADF;
+        ret_val = -1;
+        P101_ERROR_RAISE_ERRNO(err, EBADF);
+    }
+    else
+    {
+        errno   = 0;
+        ret_val = aio_write(aiocbp);
+
+        if(ret_val == -1)
+        {
+            P101_ERROR_RAISE_ERRNO(err, errno);
+        }
     }
 
     P101_WRAPPER_DONE(env);
@@ -165,7 +192,15 @@ int p101_lio_listio(const struct p101_env *env, struct p101_error *err, int mode
 
     P101_TRACE(env);
     P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
-    errno = 0;
+    if((mode != LIO_WAIT && mode != LIO_NOWAIT) || nent < 0)
+    {
+        errno   = EINVAL;
+        ret_val = -1;
+        P101_ERROR_RAISE_ERRNO(err, EINVAL);
+    }
+    else
+    {
+        errno = 0;
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wpragmas"
@@ -173,12 +208,13 @@ int p101_lio_listio(const struct p101_env *env, struct p101_error *err, int mode
 #if defined(__GNUC__) && !defined(__clang__)
     #pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
 #endif
-    ret_val = lio_listio(mode, list, nent, sig);
+        ret_val = lio_listio(mode, list, nent, sig);
 #pragma GCC diagnostic pop
 
-    if(ret_val == -1)
-    {
-        P101_ERROR_RAISE_ERRNO(err, errno);
+        if(ret_val == -1)
+        {
+            P101_ERROR_RAISE_ERRNO(err, errno);
+        }
     }
 
     P101_WRAPPER_DONE(env);
