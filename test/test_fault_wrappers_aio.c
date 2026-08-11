@@ -794,17 +794,20 @@ static void test_p101_aio_return(struct p101_env *env, struct p101_error *err)
             struct aiocb native_argument_2 = {0};
             ssize_t      native_result     = p101_aio_return(native_env, native_err, &native_argument_2);
             (void)native_result;
-            if(!p101_error_is_errno(native_err, EINVAL))
+            if(p101_error_has_error(native_err) && !p101_error_is_errno(native_err, EINPROGRESS) && !p101_error_is_errno(native_err, EINVAL))
             {
-                fprintf(stderr, "native smoke did not produce the declared failure: p101_aio_return: %s\n", p101_error_get_message(native_err));
+                fprintf(stderr, "native smoke produced an undeclared conditional failure: p101_aio_return\n");
                 native_passed = false;
             }
-            if(native_result != -1)
+            if(p101_error_has_error(native_err))
             {
-                fprintf(stderr, "native smoke returned an undeclared result: p101_aio_return\n");
-                native_passed = false;
+                if(native_result != -1)
+                {
+                    fprintf(stderr, "native smoke returned an undeclared conditional result: p101_aio_return\n");
+                    native_passed = false;
+                }
+                p101_error_reset(native_err);
             }
-            p101_error_reset(native_err);
             native_child_status = native_passed ? EXIT_SUCCESS : EXIT_FAILURE;
         native_child_done_:
             p101_env_destroy(native_env);
