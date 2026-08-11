@@ -796,7 +796,10 @@ static void test_p101_aio_return(struct p101_env *env, struct p101_error *err)
             (void)native_result;
             if(p101_error_has_error(native_err) && !p101_error_is_errno(native_err, EINPROGRESS) && !p101_error_is_errno(native_err, EINVAL))
             {
-                fprintf(stderr, "native smoke produced an undeclared conditional failure: p101_aio_return\n");
+                const char *native_error_message;
+
+                native_error_message = p101_error_get_message(native_err);
+                fprintf(stderr, "native smoke produced an undeclared conditional failure: p101_aio_return: %s\n", native_error_message);
                 native_passed = false;
             }
             if(p101_error_has_error(native_err))
