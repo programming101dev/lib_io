@@ -39,6 +39,7 @@ int p101_poll(const struct p101_env *env, struct p101_error *err, struct pollfd 
 
     P101_TRACE(env);
     P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
+    P101_WRAPPER_BLOCKING(env);
     errno   = 0;
     ret_val = poll(fds, nfds, timeout);
 

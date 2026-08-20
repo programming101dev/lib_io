@@ -38,8 +38,8 @@ extern "C"
 
     int p101_creat(const struct p101_env *env, struct p101_error *err, const char *path, mode_t mode);
     int p101_fcntl(const struct p101_env *env, struct p101_error *err, int fildes, int cmd, ...);
-    int p101_open(const struct p101_env *env, struct p101_error *err, const char *path, int oflag, ...);
-    int p101_openat(const struct p101_env *env, struct p101_error *err, int fd, const char *path, int oflag, ...);
+    int p101_open(const struct p101_env *env, struct p101_error *err, const char *path, int oflag, ...) P101_ATTR_SEMANTIC_ROLE("p101:filesystem:path-use");
+    int p101_openat(const struct p101_env *env, struct p101_error *err, int fd, const char *path, int oflag, ...) P101_ATTR_SEMANTIC_ROLE("p101:filesystem:path-use");
 
 #ifdef __cplusplus
 }

@@ -36,15 +36,15 @@ extern "C"
 {
 #endif
 
-    int     p101_close(const struct p101_env *env, struct p101_error *err, int fildes);
+    int     p101_close(const struct p101_env *env, struct p101_error *err, int fildes) P101_ATTR_SEMANTIC_ROLE("p101:progress:uncertain");
     int     p101_dup(const struct p101_env *env, struct p101_error *err, int fildes);
     int     p101_dup2(const struct p101_env *env, struct p101_error *err, int fildes, int fildes2);
     int     p101_lockf(const struct p101_env *env, struct p101_error *err, int fildes, int function, off_t size);
     off_t   p101_lseek(const struct p101_env *env, struct p101_error *err, int fildes, off_t offset, int whence);
-    ssize_t p101_pread(const struct p101_env *env, struct p101_error *err, int fildes, void *buf, size_t nbyte, off_t offset);
-    ssize_t p101_pwrite(const struct p101_env *env, struct p101_error *err, int fildes, const void *buf, size_t nbyte, off_t offset);
-    ssize_t p101_read(const struct p101_env *env, struct p101_error *err, int fildes, void *buf, size_t nbyte);
-    ssize_t p101_write(const struct p101_env *env, struct p101_error *err, int fildes, const void *buf, size_t nbyte);
+    ssize_t p101_pread(const struct p101_env *env, struct p101_error *err, int fildes, void *buf, size_t nbyte, off_t offset) P101_ATTR_SEMANTIC_ROLE("p101:result:partial");
+    ssize_t p101_pwrite(const struct p101_env *env, struct p101_error *err, int fildes, const void *buf, size_t nbyte, off_t offset) P101_ATTR_SEMANTIC_ROLE("p101:result:partial");
+    ssize_t p101_read(const struct p101_env *env, struct p101_error *err, int fildes, void *buf, size_t nbyte) P101_ATTR_SEMANTIC_ROLE("p101:result:partial");
+    ssize_t p101_write(const struct p101_env *env, struct p101_error *err, int fildes, const void *buf, size_t nbyte) P101_ATTR_SEMANTIC_ROLE("p101:result:partial");
 
 #ifdef __cplusplus
 }

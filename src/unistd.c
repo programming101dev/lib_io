@@ -205,8 +205,9 @@ ssize_t p101_pread(const struct p101_env *env, struct p101_error *err, int filde
         }
     }
     hide_success = fault.kind == P101_ENV_FAULT_UNCERTAIN;
-    errno        = 0;
-    ret_val      = pread(fildes, buf, nbyte, offset);
+    P101_WRAPPER_BLOCKING(env);
+    errno   = 0;
+    ret_val = pread(fildes, buf, nbyte, offset);
 
     if(ret_val == -1)
     {
@@ -256,8 +257,9 @@ ssize_t p101_pwrite(const struct p101_env *env, struct p101_error *err, int fild
         }
     }
     hide_success = fault.kind == P101_ENV_FAULT_UNCERTAIN;
-    errno        = 0;
-    ret_val      = pwrite(fildes, buf, nbyte, offset);
+    P101_WRAPPER_BLOCKING(env);
+    errno   = 0;
+    ret_val = pwrite(fildes, buf, nbyte, offset);
 
     if(ret_val == -1)
     {
@@ -308,6 +310,7 @@ ssize_t p101_read(const struct p101_env *env, struct p101_error *err, int fildes
     }
     hide_success = fault.kind == P101_ENV_FAULT_UNCERTAIN;
 
+    P101_WRAPPER_BLOCKING(env);
     errno   = 0;
     ret_val = read(fildes, buf, nbyte);
 
@@ -361,6 +364,7 @@ ssize_t p101_write(const struct p101_env *env, struct p101_error *err, int filde
     }
     hide_success = fault.kind == P101_ENV_FAULT_UNCERTAIN;
 
+    P101_WRAPPER_BLOCKING(env);
     errno   = 0;
     ret_val = write(fildes, buf, nbyte);
 
